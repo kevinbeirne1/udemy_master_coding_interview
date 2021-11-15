@@ -5,6 +5,7 @@ This repo collates the exercises and problems created as part of the Udemy cours
 - [Why](#why)
 - [Project Structure](#project-structure)
 - [Big O](#big-o)
+- [Interviewer's Objectives](#interviewers-objectives)
 ## Why
 Up to this point I have had only cursory engagement with data structures and algorithms. 
 On the recommendation of a friend I decided to take this course. 
@@ -72,5 +73,19 @@ for item1 in list1:
         pass
 ```
 is O(a * b)
+
+## Interviewers Objectives
+See [interview_cheat_sheet.md](https://github.com/kevinbeirne1/udemy_master_coding_interview/blob/main/interview_cheat_sheet.md) for more information
+
+The interviewer is looking to gauge the persons
+- Analytics Skills
+- Coding Skills
+- Technical Knowledge
+- Communication Skills
+How the person communicates during the technical interview will give the interviewer a sense of the levels for each.
+
+
+
+
 
 
