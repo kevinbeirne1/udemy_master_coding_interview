@@ -1,4 +1,4 @@
-#Big O Cheat Sheet:
+# Big O Cheat Sheet:
 Course Handout on Big O
 
 ## Big Os
