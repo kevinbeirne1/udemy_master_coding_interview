@@ -15,6 +15,7 @@ The udemy course is taught in javascript, and at this point in time python is my
 I decided to try challenge myself by solving in both languages to increase my proficiency in Javascript, and to better understand how to translate concepts from one language to the other
 
 ## Big O
+See [Big_O-Cheat_sheet.md](https://github.com/kevinbeirne1/udemy_master_coding_interview/blob/main/Big_O-Cheat_sheet.md) for concise summary of Big O information
 ### Big O Rules
 - *Calculate for worst case*
 
@@ -71,3 +72,5 @@ for item1 in list1:
         pass
 ```
 is O(a * b)
+
+
