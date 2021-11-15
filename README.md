@@ -47,7 +47,7 @@ So our final O(n) would be `O(a + b)`
 If time complexity is `2 * O(n)` we drop the constants and say that time complexity is `O(n)`. 
 Assuming worst case of a very large n, the constants have less of an impact of the time complexity.
 As n -> infinity, `2 * infinity` is still infinity, and we can therefore say the time complexity is going to be O(n)
-- 
+
 - *Ignore lower order terms*
 
 If time complexity is `O(n**2) + O(n) + O(1)` we ignore `O(n)` and `O(1)`. 
