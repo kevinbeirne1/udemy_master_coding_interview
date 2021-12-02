@@ -67,15 +67,13 @@ class LinkedList:
     def reverse(self):
         current_node = self.head
         follower = None
+        self.tail = follower
         for _ in range(self.length):
             next_node = current_node.next
             current_node.next = follower
             follower = current_node
             current_node = next_node
-            if not follower.next:
-                self.tail = follower
-            if not current_node:
-                self.head = follower
+        self.head = follower
 
     def __repr__(self):
         return f"{self.head}"

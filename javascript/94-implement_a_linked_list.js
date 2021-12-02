@@ -86,19 +86,16 @@ class LinkedList {
         reverse through the array creating a linked_list node for each
          */
         let follower_node = null;
+        this.tail = follower_node;
+
         let current_node = this.head
         for (let i=0; i < this.length; i++) {
             let next_node = current_node.next;
             current_node.next = follower_node;
             follower_node = current_node;
             current_node = next_node;
-            if (!follower_node.next) {
-                this.tail = follower_node
-            }
-            if (!current_node) {
-                this.head = follower_node
-            }
         }
+        this.head = follower_node;
     }
 
     toString() {
