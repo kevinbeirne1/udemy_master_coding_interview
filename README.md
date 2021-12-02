@@ -6,6 +6,9 @@ This repo collates the exercises and problems created as part of the Udemy cours
 - [Repo Structure](#repo-structure)
 - [Big O](#big-o)
 - [Interview](#interview)
+- [Data Structures](#data-structures)
+
+
 ## Why
 Up to this point I have had only cursory engagement with data structures and algorithms. 
 On the recommendation of a friend I decided to take this course. 
@@ -86,8 +89,44 @@ The interviewer is looking to gauge the persons
 - Communication Skills
 How the person communicates during the technical interview will give the interviewer a sense of the levels for each.
 
+## Data Structures
+**NOTE** This is not an exhaustive list, merely the ones most likely to be used/asked in an interview
 
+- ### ARRAYS
+Data stored in a list with no gaps in memory. 
+Accessing by index, appending to and pop from the end of the list is very quick. 
+Deleting/Inserting an item requires iterating over the list and shifting all the memory locations/keys. 
 
+| Operation | Time Complexity |
+|--- | --- |
+| Append | O(1) |
+| Pop | O(1) |
+| Access | O(1) |
+| Insert | O(n) |
+| Delete | O(n) |
+| Search | O(n) |
+
+- ### HASH TABLES
+Data 'randomly' stored using a hash function to generate a memory location from the key. 
+Accessing by the key, insertion and deletion are very quick.
+Occasionally a hash collision can increase time complexity but only rarely.
+
+| Operation | Time Complexity |
+|--- | --- |
+| Search | O(1) |
+| Insert | O(1) |
+| Delete | O(1) |
+
+- ### Linked List
+Each item in the list points to the next item. Append and prepend to list is very quick.
+
+| Operation | Time Complexity |
+|-----------|-----------------|
+| Append    | O(1)            |
+| Prepend   | O(1)            |
+| Lookup    | O(n)            |
+| Insert    | O(n)            |
+| Delete    | O(n)            |
 
 
 
