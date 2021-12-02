@@ -1,20 +1,17 @@
-# Create the below linked list
-# 10 --> 5 --> 16 --> null
-
 import unittest
 
 
 class Node:
-
     def __init__(self, value):
         self.value = value
+        self.previous = None
         self.next = None
 
     def __repr__(self):
-        return f"{self.value}, {self.next}" if self.next else f"{self.value}"
+        return f"{self.value}" if not self.next else f"{self.value}, {self.next}"
 
 
-class LinkedList:
+class DoublyLinkedList:
 
     def __init__(self, value):
         self.head = Node(value)
@@ -24,20 +21,18 @@ class LinkedList:
     def append(self, value):
         new_node = Node(value)
         self.tail.next = new_node
+        new_node.previous = self.tail
         self.tail = new_node
         self.length += 1
 
     def prepend(self, value):
         new_node = Node(value)
         new_node.next = self.head
+        self.head.previous = new_node
         self.head = new_node
         self.length += 1
 
-    def insert(self, index: int, value):
-        """
-        Going to assume positive integer received for index
-        """
-
+    def insert(self, index, value):
         if index == 0:
             self.prepend(value)
         elif index >= self.length:
@@ -45,37 +40,30 @@ class LinkedList:
         else:
             new_node = Node(value)
             leader_node = self.head
-            for _ in range(1, index):
+            for _ in range(index - 1):
                 leader_node = leader_node.next
-
-            new_node.next = leader_node.next
+            follower_node = leader_node.next
+            new_node.next = follower_node
+            new_node.previous = leader_node
             leader_node.next = new_node
+            follower_node.previous = new_node
             self.length += 1
 
     def remove(self, index):
         if index == 0:
             self.head = self.head.next
-        elif index < self.length:
+            self.head.previous = None
+        elif index == self.length - 1:
+            self.tail = self.tail.previous
+            self.tail.next = None
+        else:
             leader_node = self.head
-            for _ in range(1, index):
+            for _ in range(index - 1):
                 leader_node = leader_node.next
-            leader_node.next = leader_node.next.next
-            if not leader_node.next:
-                self.tail = leader_node
+            follower_node = leader_node.next.next
+            leader_node.next = follower_node
+            follower_node.previous = leader_node
         self.length -= 1
-
-    def reverse(self):
-        current_node = self.head
-        follower = None
-        for _ in range(self.length):
-            next_node = current_node.next
-            current_node.next = follower
-            follower = current_node
-            current_node = next_node
-            if not follower.next:
-                self.tail = follower
-            if not current_node:
-                self.head = follower
 
     def __repr__(self):
         return f"{self.head}"
@@ -111,30 +99,30 @@ class TestNode(unittest.TestCase):
 class TestLinkedList(unittest.TestCase):
 
     def setUp(self) -> None:
-        self.prepopulated_list = LinkedList(20)
+        self.prepopulated_list = DoublyLinkedList(20)
         self.prepopulated_list.append(21)
         self.prepopulated_list.append(22)
 
     def test_new_linked_list_raises_error_without_value(self):
         with self.assertRaises(TypeError):
-            LinkedList()
+            DoublyLinkedList()
 
     def test_new_linked_list_assigns_node_instance_to_head(self):
-        actual = LinkedList(20).head
+        actual = DoublyLinkedList(20).head
         self.assertIsInstance(actual, Node)
 
     def test_new_linked_list_length_equals_ones(self):
-        actual = LinkedList(20).length
+        actual = DoublyLinkedList(20).length
         self.assertEqual(actual, 1)
 
     def test_new_linked_list_head_is_tail(self):
-        test_list = LinkedList(20)
+        test_list = DoublyLinkedList(20)
         actual = test_list.tail
         expected = test_list.head
         self.assertIs(actual, expected)
 
     def test_append_increments_length(self):
-        test_list = LinkedList(20)
+        test_list = DoublyLinkedList(20)
         for i in range(5):
             with self.subTest():
                 test_list.append(i)
@@ -143,7 +131,7 @@ class TestLinkedList(unittest.TestCase):
                 self.assertEqual(actual, expected)
 
     def test_append_assigns_new_tail(self):
-        test_list = LinkedList(20)
+        test_list = DoublyLinkedList(20)
         test_list.append(1)
 
         tail = test_list.tail
@@ -153,7 +141,7 @@ class TestLinkedList(unittest.TestCase):
         self.assertEqual(tail.value, 1)
 
     def test_append_doesnt_change_head(self):
-        test_list = LinkedList(20)
+        test_list = DoublyLinkedList(20)
         expected = test_list.head
         test_list.append(1)
 
@@ -162,7 +150,7 @@ class TestLinkedList(unittest.TestCase):
         self.assertIs(actual, expected)
 
     def test_prepend_increments_length(self):
-        test_list = LinkedList(20)
+        test_list = DoublyLinkedList(20)
         for i in range(5):
             with self.subTest():
                 test_list.prepend(i)
@@ -171,7 +159,7 @@ class TestLinkedList(unittest.TestCase):
                 self.assertEqual(actual, expected)
 
     def test_prepend_assigns_new_head(self):
-        test_list = LinkedList(20)
+        test_list = DoublyLinkedList(20)
         test_list.prepend(1)
 
         tail = test_list.tail
@@ -181,7 +169,7 @@ class TestLinkedList(unittest.TestCase):
         self.assertEqual(head.value, 1)
 
     def test_prepend_doesnt_change_tail(self):
-        test_list = LinkedList(20)
+        test_list = DoublyLinkedList(20)
         expected = test_list.tail
         test_list.prepend(1)
 
@@ -211,6 +199,7 @@ class TestLinkedList(unittest.TestCase):
         test_list.insert(1, 1)
         actual = test_list.head.next.value
         new_head = test_list.head
+        print(test_list)
         self.assertEqual(actual, 1)
         self.assertIs(old_head, new_head)
 
@@ -224,52 +213,6 @@ class TestLinkedList(unittest.TestCase):
         self.assertIsNot(old_tail, new_tail)
         self.assertEqual(test_list.length, 4)
 
-    def test_remove_decrements_length(self):
-        original_length = self.prepopulated_list.length
-        for i in range(2):
-            with self.subTest():
-                self.prepopulated_list.remove(i)
-                actual = self.prepopulated_list.length
-                expected = original_length - 1 - i
-                self.assertEqual(actual, expected)
-
-    def test_remove_at_start_of_list(self):
-        test_list = self.prepopulated_list
-        expected = test_list.head.next
-        test_list.remove(0)
-        actual = test_list.head
-        self.assertEqual(actual, expected)
-
-    def test_remove_in_middle_of_list(self):
-        test_list = self.prepopulated_list
-        test_list.remove(1)
-        actual = test_list.tail
-        expected = test_list.head.next
-        self.assertEqual(actual, expected)
-
-    def test_remove_at_the_end_of_list(self):
-        test_list = self.prepopulated_list
-        expected = test_list.head.next
-        test_list.remove(2)
-        actual = test_list.tail
-        self.assertEqual(actual, expected)
-
-    def test_reverse(self):
-        test_list = self.prepopulated_list
-        test_list.reverse()
-        expected = "22, 21, 20"
-        actual = str(test_list)
-        self.assertEqual(actual, expected)
-
 
 if __name__ == "__main__":
     unittest.main()
-
-test = LinkedList(10)
-test.append(5)
-test.append(16)
-test.prepend(42)
-test.remove(0)
-print(test)
-print(test.head)
-

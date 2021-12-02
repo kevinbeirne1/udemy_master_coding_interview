@@ -5,20 +5,13 @@ class Node {
     constructor(value) {
         this.value = value;
         this.next = null;
-    }
-
-    toString() {
-        let tail_string = ""
-        if (this.next) {
-            tail_string = `, ${this.next}`
-        }
-        return `${this.value}${tail_string}`
+        this.previous = null;
     }
 
 }
 
 
-class LinkedList {
+class DoublyLinkedList {
     constructor(value) {
         this.head = new Node(value)
         this.tail = this.head;
@@ -28,6 +21,7 @@ class LinkedList {
     append (value) {
         let newNode = new Node(value);
         this.tail.next = newNode;
+        newNode.previous = this.tail
         this.tail = newNode;
         this.length ++;
     }
@@ -35,6 +29,7 @@ class LinkedList {
     prepend (value) {
         let newNode = new Node(value);
         newNode.next = this.head;
+        this.head.previous = newNode
         this.head = newNode;
         this.length ++;
     }
@@ -53,7 +48,10 @@ class LinkedList {
             for (let i = 1; i < index; i++) {
                 leaderNode = leaderNode.next;
             }
-            newNode.next = leaderNode.next;
+            let followerNode = leaderNode.next
+            newNode.next = followerNode;
+            newNode.previous = leaderNode
+            followerNode.previous = newNode;
             leaderNode.next = newNode;
 
             this.length ++;
@@ -69,7 +67,10 @@ class LinkedList {
             for (let i = 1; i < index; i++) {
                 leaderNode = leaderNode.next;
             }
-            leaderNode.next = leaderNode.next.next;
+            let followerNode = leaderNode.next.next
+
+            leaderNode.next = followerNode;
+            followerNode.previous = leaderNode;
             if (! leaderNode.next) {
                 this.tail = leaderNode;
             }
@@ -77,42 +78,14 @@ class LinkedList {
         this.length --;
     }
 
-    reverse() {
-        /*
-        Iterate through the list
-        At each node create follower_node
-        set follower_node.next = current_node
-        making an array of the values
-        reverse through the array creating a linked_list node for each
-         */
-        let follower_node = null;
-        let current_node = this.head
-        for (let i=0; i < this.length; i++) {
-            let next_node = current_node.next;
-            current_node.next = follower_node;
-            follower_node = current_node;
-            current_node = next_node;
-            if (!follower_node.next) {
-                this.tail = follower_node
-            }
-            if (!current_node) {
-                this.head = follower_node
-            }
-        }
-    }
-
-    toString() {
-        return `${this.head}`
-    }
 }
 
-let myLinkedList = new LinkedList(10)
+let myLinkedList = new DoublyLinkedList(10)
 myLinkedList.append(5)
+console.log("\n")
 myLinkedList.append(16)
 myLinkedList.prepend(42)
 myLinkedList.insert(3, 45)
 
-console.log(myLinkedList.toString())
-myLinkedList.reverse()
-console.log(myLinkedList.toString())
-
+console.log(myLinkedList.length)
+console.log(myLinkedList)
