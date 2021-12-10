@@ -78,6 +78,10 @@ class DoublyLinkedList {
         this.length --;
     }
 
+    get length_2() {
+        return this.length * this.length
+    }
+
 }
 
 let myLinkedList = new DoublyLinkedList(10)
@@ -88,4 +92,4 @@ myLinkedList.prepend(42)
 myLinkedList.insert(3, 45)
 
 console.log(myLinkedList.length)
-console.log(myLinkedList)
+console.log('test', myLinkedList.length_2)
