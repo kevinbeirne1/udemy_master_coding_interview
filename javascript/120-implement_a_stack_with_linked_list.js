@@ -4,36 +4,29 @@ var expect = require('chai').expect
 var mocha = new Mocha()
 
 
+class Node {
+    constructor(value) {
+        if (value === undefined) {
+            throw new TypeError("Node() expects a value for construction.")
+        }
+        this.value = value;
+        this.next = null;
+    }
+}
+
 class Stack {
     constructor() {
-        this.stack = [];
-    }
-
-    get length () {
-        return this.stack.length
-    }
-
-    get top (){
-        if (this.stack.length === 0) {
-            return null
-        }
-        return this.stack[this.stack.length - 1]
-    }
-
-    get bottom () {
-        if (this.stack.length === 0) {
-            return null
-        }
-        return this.stack[0]
+        this.top = null;
+        this.bottom = null;
+        this.length = 0;
     }
 
     get next () {
-        if (this.stack.length <= 1) {
+        if (!this.top) {
             return null
         }
-        return this.stack[this.stack.length - 2]
+        return this.top.next
     }
-
 
     push(value) {
         /*
@@ -42,7 +35,14 @@ class Stack {
         if (value === undefined) {
             throw new TypeError('push() expects a value to be provided.')
         }
-        this.stack.push(value)
+        let node = new Node(value)
+        node.next = this.top
+        this.top = node
+        if (!this.bottom) {
+            this.bottom = this.top
+        }
+        this.length ++;
+
     }
 
     pop() {
@@ -52,7 +52,10 @@ class Stack {
         if (this.length === 0) {
             throw new TypeError('cannot pop() an empty stack.')
         }
-        return this.stack.pop()
+        let old_top = this.top
+        this.top = this.top.next
+        this.length --;
+        return old_top.value
     }
 
     peek() {
@@ -62,7 +65,7 @@ class Stack {
         if (!this.top) {
             throw new TypeError('cannot peek() an empty stack.')
         }
-        return this.top
+        return this.top.value
     }
 
     isEmpty() {
@@ -72,6 +75,23 @@ class Stack {
         return this.length === 0
     }
 }
+
+describe('Node', function() {
+  context('Creation', function() {
+    it('should raise error if no value provided', () => {
+        expect(() => {new Node()}).to.Throw()
+    });
+
+    it('should have a next property === null', () => {
+        expect(new Node(3).next).to.equal(null)
+    });
+
+    it('should have a value property equal to the value provided', () => {
+        expect(new Node(3).value).to.equal(3)
+    })
+  });
+
+});
 
 describe('Stack', () => {
     context('Creation', () => {
@@ -108,13 +128,13 @@ describe('Stack', () => {
       it('should set the top === equal to the new value', () => {
           let stack = new Stack()
           stack.push(5)
-          expect(stack.top).to.equal(5)
+          expect(stack.top.value).to.equal(5)
       })
 
       it('should set top equal to bottom when push to empty stack', () => {
           let stack = new Stack()
           stack.push(5)
-          expect(stack.bottom).to.equal(5)
+          expect(stack.bottom.value).to.equal(5)
       })
 
 
@@ -122,7 +142,7 @@ describe('Stack', () => {
           let stack = new Stack()
           stack.push(5)
           stack.push(99)
-          expect(stack.top).to.equal(99)
+          expect(stack.top.value).to.equal(99)
       })
 
       it('should maintain the link to previous item when push to non empty list', () => {
@@ -137,7 +157,7 @@ describe('Stack', () => {
           let stack = new Stack()
           stack.push(5)
           stack.push(99)
-          expect(stack.bottom).to.equal(5)
+          expect(stack.bottom.value).to.equal(5)
       })
   })
 
@@ -167,11 +187,11 @@ describe('Stack', () => {
         })
 
         it('should set the top equal to the next node', () => {
-            let next = this.stack.next;
+            let next = this.stack.top.next;
             this.stack.pop();
             expect(this.stack.top).to.equal(next);
 
-            next = this.stack.next;
+            next = this.stack.top.next;
             this.stack.pop();
             expect(this.stack.top).to.equal(next);
         })
@@ -185,13 +205,13 @@ describe('Stack', () => {
         })
 
         it('should return the value of old top item in the stack', () => {
-            let top_value = this.stack.top;
+            let top_value = this.stack.top.value;
             expect(this.stack.pop()).to.equal(top_value);
 
-            top_value = this.stack.top;
+            top_value = this.stack.top.value;
             expect(this.stack.pop()).to.equal(top_value);
 
-            top_value = this.stack.top;
+            top_value = this.stack.top.value;
             expect(this.stack.pop()).to.equal(top_value);
         })
 
@@ -229,7 +249,7 @@ describe('Stack', () => {
         })
 
         it('should return the value of the top item in the stack', () => {
-            let top_value = this.stack.top
+            let top_value = this.stack.top.value
             expect(this.stack.peek()).to.equal(top_value)
         })
 
