@@ -117,7 +117,7 @@ Occasionally a hash collision can increase time complexity but only rarely.
 | Insert | O(1) |
 | Delete | O(1) |
 
-- ### Linked List
+- ### LINKEDLIST
 Each item in the list points to the next item. Append and prepend to list is very quick.
 
 | Operation | Time Complexity |
@@ -129,4 +129,45 @@ Each item in the list points to the next item. Append and prepend to list is ver
 | Delete    | O(n)            |
 
 
+- ### STACK
+Last In First Out (LIFO) data struction, is akin to a stack of plates. 
+Each new item goes to the top of the stack, and we take from the top when removing.
 
+| Operation | Time Complexity |
+|-----------|-----------------|
+| Push      | O(1)            |
+| Pop       | O(1)            |
+| Peek      | O(1)            |
+| Lookup    | O(n)            |
+
+- ### QUEUE
+First In First Out (FIFO) data struction, is akin to a line at a cash register. 
+Each new item goes to the back of the queue, and we take from the front when removing.
+
+| Operation | Time Complexity |
+|-----------|-----------------|
+| Enqueue   | O(1)            |
+| Dequeue   | O(1)            |
+| Peek      | O(1)            |
+| Lookup    | O(n)            |
+
+- ### BINARY SEARCH TREE
+Starting from a single node, which can have up to two direct children. 
+All numbers to the left side of the node are less than the node value.
+All numbers to the right are greater than the node value. 
+Each subsequent child node has the same structure
+
+```
+Example:
+     9
+   /   \
+  4     20
+ / \   /  \
+1   6 15  40
+```
+
+| Operation | Time Complexity |
+|-----------|-----------------|
+| Lookup    | O(log(n))       |
+| Insert    | O(log(n)        |
+| Delete    | O(log(n)        |

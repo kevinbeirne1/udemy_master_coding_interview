@@ -13,6 +13,8 @@ class Node:
     def __repr__(self):
         return f"{self.value}, {self.next}" if self.next else f"{self.value}"
 
+    # def __iter__(self):
+    #     yield self.next
 
 class LinkedList:
 
@@ -52,6 +54,12 @@ class LinkedList:
             leader_node.next = new_node
             self.length += 1
 
+    def __iter__(self):
+        node = self.head
+        while node is not None:
+            yield node
+            node = node.next
+
     def remove(self, index):
         if index == 0:
             self.head = self.head.next
@@ -67,13 +75,22 @@ class LinkedList:
     def reverse(self):
         current_node = self.head
         follower = None
-        self.tail = follower
-        for _ in range(self.length):
-            next_node = current_node.next
-            current_node.next = follower
-            follower = current_node
-            current_node = next_node
-        self.head = follower
+        # self.tail = follower
+        # for _ in range(self.length):
+        #     next_node = current_node.next
+        #     current_node.next = follower
+        #     follower = current_node
+        #     current_node = next_node
+        # self.head = follower
+        list_copy = self.copy()
+        for node in self:
+            node.next = follower
+            follower = node
+            print(follower)
+        self.head, self.tail = self.tail, self.head
+        # print(self.head.value, self.head.next)
+        # print(self.tail.value, self.tail.next)
+
 
     def __repr__(self):
         return f"{self.head}"
@@ -259,6 +276,11 @@ class TestLinkedList(unittest.TestCase):
         actual = str(test_list)
         self.assertEqual(actual, expected)
 
+    def test_dunder_iter(self):
+        test_list = self.prepopulated_list
+        for node in test_list:
+            # print(node.value)
+            pass
 
 if __name__ == "__main__":
     unittest.main()
