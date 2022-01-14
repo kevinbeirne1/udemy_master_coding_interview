@@ -171,3 +171,22 @@ Example:
 | Lookup    | O(log(n))       |
 | Insert    | O(log(n)        |
 | Delete    | O(log(n)        |
+
+- ### BINARY HEAP
+Can be either a max or min heap. 
+Min Heap: Tree where each parent node is greater than both it's children
+Min Heap: Tree where each parent node is less than both it's children
+
+
+| Operation | Time Complexity |
+|-----------|-----------------|
+| Lookup    | O(n)            |
+| Insert    | O(log(n)        |
+| Delete    | O(log(n)        |
+
+- ### GRAPH
+Graphs can be described by a number of terms:
+
+    - Cyclic/Acyclic: Can/can't return to the start point without doubling back
+    - Directed/Undirected: Can/can't move only in specified direction between nodes
+    - Weighted/Unweighted: Vertex between nodes has/hasn't a weight associated
