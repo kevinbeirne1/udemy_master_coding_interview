@@ -190,3 +190,10 @@ Graphs can be described by a number of terms:
     - Cyclic/Acyclic: Can/can't return to the start point without doubling back
     - Directed/Undirected: Can/can't move only in specified direction between nodes
     - Weighted/Unweighted: Vertex between nodes has/hasn't a weight associated
+
+## Algorithms
+
+- ### RECURSION
+A function that calls itself. Recursion needs a break case to prevent infinite loop and a subsequent stack overflow.
+Any recursive function can be written as an iterative function. 
+Recursion is often preferred when the number of loops is unknown/variable, eg tree traversal, sorting, searching, etc.

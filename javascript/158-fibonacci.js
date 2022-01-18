@@ -5,6 +5,7 @@ var mocha = new Mocha()
 
 
 function fibonacciIterative(value) {
+    // O(n) complexity
     if (value === undefined) {
         throw TypeError('No value specified')
     }
@@ -18,6 +19,7 @@ function fibonacciIterative(value) {
 }
 
 function fibonacciRecursive(value) {
+    // O(n ** 2) complexity
     if (value === undefined) {
         throw TypeError('No value specified')
     }

@@ -2,12 +2,14 @@ import unittest
 
 
 def fibonacci_recursive(value):
+    # O(n ** 2) complexity
     if value <= 1:
         return value
     return fibonacci_recursive(value-1) + fibonacci_recursive(value-2)
 
 
 def fibonacci_iterative(value):
+    # O(n) complexity
     first, second = 0, 1
     for i in range(value):
         first, second = second, first + second
