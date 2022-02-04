@@ -7,6 +7,18 @@ This repo collates the exercises and problems created as part of the Udemy cours
 - [Big O](#big-o)
 - [Interview](#interview)
 - [Data Structures](#data-structures)
+    - [Arrays](#arrays)
+    - [Hash Tables](#hash-tables)
+    - [Linked Lists](#linked-lists)
+    - [Stacks](#stacks)
+    - [Binary Search Trees](#binary-search-trees)
+    - [Binary Heaps](#binary-heaps)
+    - [Graphs](#graphs)
+- [Algorithms](#algorithms)
+  - [Recursion](#recursion)
+  - [Sorting](#sorting)
+  - [Searching](#searching)
+  - [Memoization](#memoization)
 
 
 ## Why
@@ -117,7 +129,7 @@ Occasionally a hash collision can increase time complexity but only rarely.
 | Insert | O(1) |
 | Delete | O(1) |
 
-- ### LINKEDLIST
+- ### LINKED LISTs
 Each item in the list points to the next item. Append and prepend to list is very quick.
 
 | Operation | Time Complexity |
@@ -129,7 +141,7 @@ Each item in the list points to the next item. Append and prepend to list is ver
 | Delete    | O(n)            |
 
 
-- ### STACK
+- ### STACKs
 Last In First Out (LIFO) data struction, is akin to a stack of plates. 
 Each new item goes to the top of the stack, and we take from the top when removing.
 
@@ -140,7 +152,7 @@ Each new item goes to the top of the stack, and we take from the top when removi
 | Peek      | O(1)            |
 | Lookup    | O(n)            |
 
-- ### QUEUE
+- ### QUEUEs
 First In First Out (FIFO) data struction, is akin to a line at a cash register. 
 Each new item goes to the back of the queue, and we take from the front when removing.
 
@@ -151,7 +163,7 @@ Each new item goes to the back of the queue, and we take from the front when rem
 | Peek      | O(1)            |
 | Lookup    | O(n)            |
 
-- ### BINARY SEARCH TREE
+- ### BINARY SEARCH TREES
 Starting from a single node, which can have up to two direct children. 
 All numbers to the left side of the node are less than the node value.
 All numbers to the right are greater than the node value. 
@@ -172,7 +184,7 @@ Example:
 | Insert    | O(log(n)        |
 | Delete    | O(log(n)        |
 
-- ### BINARY HEAP
+- ### BINARY HEAPS
 Can be either a max or min heap. 
 Min Heap: Tree where each parent node is greater than both it's children
 Min Heap: Tree where each parent node is less than both it's children
@@ -184,7 +196,7 @@ Min Heap: Tree where each parent node is less than both it's children
 | Insert    | O(log(n)        |
 | Delete    | O(log(n)        |
 
-- ### GRAPH
+- ### GRAPHS
 Graphs can be described by a number of terms:
 
     - Cyclic/Acyclic: Can/can't return to the start point without doubling back
@@ -197,3 +209,368 @@ Graphs can be described by a number of terms:
 A function that calls itself. Recursion needs a break case to prevent infinite loop and a subsequent stack overflow.
 Any recursive function can be written as an iterative function. 
 Recursion is often preferred when the number of loops is unknown/variable, eg tree traversal, sorting, searching, etc.
+
+- ### SORTING
+
+  - #### Use Cases 
+
+| Sort Type | When to Use                                           |
+|-----------|-------------------------------------------------------|
+| Bubble    | Only for teaching tool                                |
+| Selection | Only for teaching tool                                |
+| Insertion | Small Dataset and mostly sorted                       |
+| Merge     | If time complexity is key factor                      |
+| Quick     | If space complexity is key factor                     |
+| Heap      | If both time and space complexity are key             |
+| Counting  | When dealing with fixed range of integers             |
+| Radix     | When dealing with with range of multi-figure integers |
+
+
+
+  - #### Bubble Sort
+Loop through the list comparing each item to the next. 
+If current item greater swap positions with next item. 
+Continue comparing items until reach the end of the list, and then restart the process
+The larger items will bubble up to the end of the list, with each iteration.
+```
+eg:
+6, 5, 3, 1, 8, 7, 2, 4
+
+1st Loop
+    [6 > 5] 3, 1, 8, 7, 2, 4 -> 5, 6, 3, 1, 8, 7, 2, 4
+    5, [6 > 3] 1, 8, 7, 2, 4 -> 5, 3, 6, 1, 8, 7, 2, 4
+    5, 3, [6 > 1] 8, 7, 2, 4 -> 5, 3, 1, 6, 8, 7, 2, 4
+    5, 3, 1, [6 < 8] 7, 2, 4 -> 5, 3, 1, 6, 8, 7, 2, 4
+    5, 3, 1, 6 [8 > 7], 2, 4 -> 5, 3, 1, 6, 7, 8, 2, 4
+    ...
+
+2nd Loop
+    [5 > 3] 1, 6, 7, 2, 4, 8 -> 3, 5, 1, 6, 7, 2, 4, 8
+    ...
+    3, 1, 5, 6, 2, [7 > 4], 8 -> 3, 1, 5, 6, 2, 4, 7, 8
+
+...
+```
+Time complexity of O(n ** 2), space complexity of O(1)
+
+  - #### Selection Sort
+Loop through the list finding the smallest item. 
+Swap that item with the 0 index item.
+Search for the next smallest item and swap that with the next index.
+Continue until at the end of the list
+
+```
+eg: 8, 5, 2, 6, 9, 3, 1, 4, 0, 7
+
+8, 5, 2, 6, 9, 3, 1, 4, [0], 7
+^________________________|
+0, 5, 2, 6, 9, 3, [1], 4, 8, 7
+   ^_______________|
+0, 1, [2], 6, 9, 3, 5, 4, 8, 7
+       ^
+0, 1, 2, 6, 9, [3], 5, 4, 8, 7
+         ^______|
+0, 1, 2, 3, 9, 6, 5, [4], 8, 7
+            ^_________|
+...
+```
+Time complexity of O(n ** 2), space complexity of O(1)
+
+
+  - #### Insertion Sort
+Start at the first item at the list and leave in position.
+Move to next item, if greater than previous item leave where it is and move to the next.
+If it's less, shift all that numbers greater than it in the sorted array to the right, and insert it there.
+Continue through all the items, inserting each into the correct position in the previous sorted items
+
+``` 
+eg: 6, 5, 3, 1, 8, 7, 2, 4
+
+  {6}, 5, 3, 1, 8, 7, 2, 4  --> [6], 5, 3, 1, 8, 7, 2, 4
+   ^
+  [6], {5}, 3, 1, 8, 7, 2, 4  --> [5, 6], 3, 1, 8, 7, 2, 4
+ ^______|
+  [5, 6], {3}, 1, 8, 7, 2, 4  --> [3, 5, 6], 1, 8, 7, 2, 4
+ ^_________|
+  [3, 5, 6], {1}, 8, 7, 2, 4  --> [1, 3, 5, 6], 8, 7, 2, 4
+ ^____________|
+ 
+ ```
+Time complexity of O(n ** 2), space complexity of O(1).
+Time complexity approaches O(n) if data is almost sorted
+
+
+  - #### Merge Sort
+Repeatedly divide the list is half until each sublist contains only one item.
+Compare the first two items and put them in an ordered list.
+Repeat for each individual pair.
+Compare the items of the first and second two item sublists and put them in an ordered sublist
+Repeat for each pair of two item sublists
+Repeat the comparision of larger sublists until all the items have been merged
+
+```
+eg: 6, 5, 3, 1, 8, 7, 2, 4
+
+SUBDIVIDE:
+
+[6, 5, 3, 1, 8, 7, 2, 4] --> [6, 5, 3, 1], [8, 7, 2, 4]
+
+[6, 5, 3, 1], [8, 7, 2, 4] --> [6, 5], [3, 1], [8, 7], [2, 4]
+
+[6, 5], [3, 1], [8, 7], [2, 4] --> [6], [5], [3], [1], [8], [7], [2], [4]
+
+COMPARE AND MERGE
+1st Layer:
+  [6] > [5] --> [5, 6]
+  [3] > [1] --> [1, 3] 
+  [8] > [7] --> [7, 8] 
+  [2] < [4] --> [2, 4]
+
+[6], [5], [3], [1], [8], [7], [2], [4] --> [5, 6], [1, 3], [7, 8], [2, 4]
+
+
+2nd Layer:
+  
+  Merge: [5, 6], [1, 3]
+    [5] > [1] --> [1, ...]
+    [5] > [3] --> [1, 3, ...]
+    [5] < [ ] --> [1, 3, 5, ...]
+    [7] < [ ] --> [1, 3, 5, 7]
+  
+  Merge: [7, 8], [2, 4]
+    [7] > [2] --> [2, ...]
+    [7] > [4] --> [2, 4, ...]
+    [7] < [ ] --> [2, 4, 7, ...]
+    [8] < [ ] --> [2, 4, 7, 8]
+
+[5, 6], [1, 3], [7, 8], [2, 4] --> [1, 3, 5, 7] --> [2, 4, 7, 8]
+
+
+3rd Layer:
+  Merge: [1, 3, 5, 7], [2, 4, 7, 8]
+    [1] > [2] --> [1, ...]
+    [3] > [2] --> [1, 2, ...]
+    [3] < [4] --> [1, 2, 3, ...]
+    [5] > [4] --> [1, 2, 3, 4 ...]
+    ...
+[1, 3, 5, 7], [2, 4, 7, 8] --> [1, 2, 3, 4, 5, 6, 7, 8]
+```
+
+Time complexity of O(n log(n)), space complexity of O(n)
+
+  - #### Quick Sort
+A pivot point is chosen. 
+The list is iterated through and all items less than pivot go to it's left, and greater to it's right.
+QuickSort is then recursively applied to the sublists to the left and right of the pivot
+
+
+Note: There are many ways of choosing the pivot and separating the numbers to the left/right
+```
+eg: 6, 5, 3, 1, 8, 7, 2, 4 
+
+4 picked as the partion
+Iterate through the list and separate left/right
+
+
+6, 5, 3, 1, 8, 7, 2, [4] --> 2, 5, 3, 1, 8, 7, [4], 6 
+^_____________________|
+    {4 < 6} --> swaped 2 & 6, then swaped 4 & 6
+    
+2, 5, 3, 1, 8, 7, [4], 6 --> 2, 5, 3, 1, 8, 7, [4], 6
+^__________________|
+
+2, 5, 3, 1, 8, 7, [4], 6 --> 2, 7, 3, 1, 8, [4], 5, 6
+   ^_______________|
+   
+2, 7, 3, 1, 8, [4], 5, 6 --> 2, 8, 3, 1, [4], 7, 5, 6
+   ^____________|
+   
+2, 8, 3, 1, [4], 7, 5, 6 --> 2, 1, 3, [4], 8, 7, 5, 6
+   ^_________|
+
+Process Repeat on sublists [2, 1, 3] & [8, 7, 5, 6]
+
+```
+Average Time Complexity O(n log(n)), space complexity of O(log(n)). 
+Choice of pivot and whether the data is already sorted can lead to O(n ** 2) time complexity.
+For example if the list is already sorted and pivot is chosen as the last item, there will be no divide and
+conquer.
+
+
+- #### Heap Sort
+A Max Binary Heap is created from the Array (Min Heap can also be used to do heapsort).
+The root node is swapped with the last node in the heap. 
+This new last node is removed from consideration.
+The new root is sifted down until a valid Max Heap.
+The process repeats until all items are sorted
+
+```
+eg 6, 5, 3, 1, 8, 7, 2, 4 
+
+BUILD MAX HEAP:
+    
+    
+    6            6            8             8                 
+   / \          / \          / \          /   \
+  5   3   -->  8   3   -->  6   3   ...  6     7 
+ / \          / \          / \          / \   / \
+1   8        1   5        1   5        4   5 3   2
+                                      /
+                                     1 
+
+  In array format: 
+  6, 5, 3, 1, 8, 7, 2, 4 --> 8, 6, 7, 4, 5, 3, 2, 1
+
+SWAP ROOT AND LAST:
+       1                 
+     /   \
+    6     7 
+   / \   / \
+  4   5 3   2
+ /
+8 
+
+  In array format: 
+  8, 6, 7, 4, 5, 3, 2, 1 --> 1, 6, 7, 4, 5, 3, 2, [8] 
+  
+SIFT DOWN ROOT:
+     1              7              7                             
+   /   \          /   \          /   \ 
+  6     7   -->  6     1   -->  6     3   
+ / \   / \      / \   / \      / \   / \                   
+4   5 3   2    4   5 3   2    4   5 1   2     
+
+  In array Format:
+  1, 6, 7, 4, 5, 3, 2, [8] --> 7, 6, 3, 4, 5, 1, 2, [8] 
+
+REPEAT
+     2              6              6                             
+   /   \          /   \          /   \ 
+  6     3   -->  2     3   -->  5     3   
+ / \   /        / \   /        / \   /                    
+4   5 1        4   5 1        4   2 1        
+
+  In array Format:
+  1, 6, 7, 4, 5, 3, 2, [8] --> 6, 5, 3, 4, 2, 1, [7, 8] 
+```
+
+Time complexity always O(n log(n)). Space complexity O(1)
+
+- #### Counting Sort
+Can use for array of integers.
+Create an empty array O, equal in length to input array I.
+Create an empty array A of length largest integer + 1.
+Loop through the input array I, and for each item A[i] += 1 
+Loop through array A, adding the previous items to the current item
+Loop through items in I, setting O[A[i] - 1] = item, and decrementing A[i]
+
+
+``` 
+eg 1, 2, 4, 5, 2, 3, 3, 4, 0, 2, 5
+
+Create an empty array O equal in length to I:
+O = [None] * 11
+
+Five is largest no --> Create an empty array O of length (5 + 1) 
+A = [-1] * 6
+
+Loop through I and increment the values in A:
+i = 1, A[1] += 1 -> A = [0, 1, 0, 0, 0, 0]
+i = 2, A[2] += 1 -> A = [0, 1, 1, 0, 0, 0]
+...
+A = [1, 1, 3, 2, 2, 2]
+
+Loop through the array, adding previous items
+A = [1, 2, 5, 7, 9, 11]
+
+Loop through I, setting O[A[i] - 1] and decrementing A[i]
+i = 1, A[1] = 2, O[A[i] - 1] -> O[1] = 1 --> O = [None, 1, None * 9]
+i = 2, A[2] = 5, O[A[i] - 1] -> O[4] = 2 --> O = [None, 1, None, None, 2, None * 6]
+i = 4, A[2] = 9, O[A[i] - 1] -> O[8] = 4 --> 
+i = 5, A[5] = 11, O[A[i] - 1] -> O[10] = 5 --> 
+i = 2, A[2] = 4, O[A[i] - 1] -> O[3] = 2 --> 
+
+```
+
+Time complexity O(n + k), where k is the largest integer. Space complexity of O(k)
+
+- #### Radix Sort
+Similar sorting mechanism to counting sort except is done by ordering by the ones place, then 10s, 1000s, etc
+
+## Searching
+
+- ### Linear Search
+When data is in a linear structure (eg array), search through the data by looking at every item
+
+- ### Binary Search
+When the data is a binary search tree, only have to search through log(n) of the items to try find a match
+
+- ### Breadth First Search/Traversal
+Visit all the immediate child/neighbour nodes. 
+Only move on to the next tier/layer after all the previous children have been visited
+
+Good for finding the shortest path to a node. Space complexity required is a drawback
+
+```
+       9                 
+     /   \
+    4     20 
+   / \   / \
+  1   6 15  170
+  
+BFS Order of visit: 
+  9 -> 4 -> 20 -> 1 -> 6 -> 15 -> 170
+  ```
+
+Worst Case Space complexity of O(n), as all elements may have to be added to a queue.
+Time complexity of O(n)
+
+- ### Depth First Search/Traversal
+Follow a branch down to it's furthest depth. 
+Then back track to the nearest unvisited fork and follow that to it's furthest
+
+Good for checking if a path exists between two nodes. Gets slower the deeper the graph
+
+```
+       9                 
+     /   \
+    4     20 
+   / \   / \
+  1   6 15  170
+  
+  
+DFS Order of visit: 
+  1 -> 6 -> 4 -> 5 -> 7 -> 3 -> 2
+  
+
+Tree can be traversed
+  - In Order: in increasing size 
+      1, 4, 6, 9, 15, 20, 170
+  - Pre Order: Starting at root to lowest left, then moving right
+      9, 4, 1, 6, 20, 15, 170
+  - Post Order: Starting at lowest left, traverse all children then move up
+      1, 6, 4, 15, 170, 20, 9
+  ```
+If using recursion, worst case Space complexity of O(h). 
+The max number of recursions is equal to the height of the tree.
+Time complexity of O(n)
+
+- ### Dijkstra's Algorithm
+Find the shortest path between two nodes
+
+  1. Create an empty set for visited nodes.
+  2. Create a min binary heap as queue
+     (Min binary heap will mean that the next closest node will always be at index 0)
+  3. Assign a tentative distance to all starting nodes as infinity.
+  4. Select the first node in the queue
+  5. If the selected node is visited remove from queue and move to next in queue
+  6. For the current node, look at all unvisited neighbouring nodes. 
+  Calculate their cost/distance through the current node
+  7. If the neighbours calculated distance is less than it's tentative distance.
+  The calculated distance becomes the new tentative. Add this neighbour node to the queue
+  8. When all unvisited neighbour distances are updated. 
+     Add the current node to visited and move the node in the queue
+
+## Memoization
+When running a recursive and/complex algorithim, store the return value in a cache to prevent repeating a calculation.
+
