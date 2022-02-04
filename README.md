@@ -6,6 +6,9 @@ This repo collates the exercises and problems created as part of the Udemy cours
 - [Repo Structure](#repo-structure)
 - [Big O](#big-o)
 - [Interview](#interview)
+- [Data Structures](#data-structures)
+
+
 ## Why
 Up to this point I have had only cursory engagement with data structures and algorithms. 
 On the recommendation of a friend I decided to take this course. 
@@ -86,8 +89,111 @@ The interviewer is looking to gauge the persons
 - Communication Skills
 How the person communicates during the technical interview will give the interviewer a sense of the levels for each.
 
+## Data Structures
+**NOTE** This is not an exhaustive list, merely the ones most likely to be used/asked in an interview
+
+- ### ARRAYS
+Data stored in a list with no gaps in memory. 
+Accessing by index, appending to and pop from the end of the list is very quick. 
+Deleting/Inserting an item requires iterating over the list and shifting all the memory locations/keys. 
+
+| Operation | Time Complexity |
+|--- | --- |
+| Append | O(1) |
+| Pop | O(1) |
+| Access | O(1) |
+| Insert | O(n) |
+| Delete | O(n) |
+| Search | O(n) |
+
+- ### HASH TABLES
+Data 'randomly' stored using a hash function to generate a memory location from the key. 
+Accessing by the key, insertion and deletion are very quick.
+Occasionally a hash collision can increase time complexity but only rarely.
+
+| Operation | Time Complexity |
+|--- | --- |
+| Search | O(1) |
+| Insert | O(1) |
+| Delete | O(1) |
+
+- ### LINKEDLIST
+Each item in the list points to the next item. Append and prepend to list is very quick.
+
+| Operation | Time Complexity |
+|-----------|-----------------|
+| Append    | O(1)            |
+| Prepend   | O(1)            |
+| Lookup    | O(n)            |
+| Insert    | O(n)            |
+| Delete    | O(n)            |
 
 
+- ### STACK
+Last In First Out (LIFO) data struction, is akin to a stack of plates. 
+Each new item goes to the top of the stack, and we take from the top when removing.
+
+| Operation | Time Complexity |
+|-----------|-----------------|
+| Push      | O(1)            |
+| Pop       | O(1)            |
+| Peek      | O(1)            |
+| Lookup    | O(n)            |
+
+- ### QUEUE
+First In First Out (FIFO) data struction, is akin to a line at a cash register. 
+Each new item goes to the back of the queue, and we take from the front when removing.
+
+| Operation | Time Complexity |
+|-----------|-----------------|
+| Enqueue   | O(1)            |
+| Dequeue   | O(1)            |
+| Peek      | O(1)            |
+| Lookup    | O(n)            |
+
+- ### BINARY SEARCH TREE
+Starting from a single node, which can have up to two direct children. 
+All numbers to the left side of the node are less than the node value.
+All numbers to the right are greater than the node value. 
+Each subsequent child node has the same structure
+
+```
+Example:
+     9
+   /   \
+  4     20
+ / \   /  \
+1   6 15  40
+```
+
+| Operation | Time Complexity |
+|-----------|-----------------|
+| Lookup    | O(log(n))       |
+| Insert    | O(log(n)        |
+| Delete    | O(log(n)        |
+
+- ### BINARY HEAP
+Can be either a max or min heap. 
+Min Heap: Tree where each parent node is greater than both it's children
+Min Heap: Tree where each parent node is less than both it's children
 
 
+| Operation | Time Complexity |
+|-----------|-----------------|
+| Lookup    | O(n)            |
+| Insert    | O(log(n)        |
+| Delete    | O(log(n)        |
 
+- ### GRAPH
+Graphs can be described by a number of terms:
+
+    - Cyclic/Acyclic: Can/can't return to the start point without doubling back
+    - Directed/Undirected: Can/can't move only in specified direction between nodes
+    - Weighted/Unweighted: Vertex between nodes has/hasn't a weight associated
+
+## Algorithms
+
+- ### RECURSION
+A function that calls itself. Recursion needs a break case to prevent infinite loop and a subsequent stack overflow.
+Any recursive function can be written as an iterative function. 
+Recursion is often preferred when the number of loops is unknown/variable, eg tree traversal, sorting, searching, etc.
